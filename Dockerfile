@@ -1,6 +1,5 @@
-ARG ARCH=
-FROM ${ARCH}alpine:latest
-MAINTAINER webhainaut <jerome@webhainaut.be>
+FROM alpine:latest
+MAINTAINER NapalmZ <admin@napalmz.eu>
 
 ENV HOST=""
 ENV LOGIN=""
@@ -12,6 +11,7 @@ RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repos
     && apk --no-cache update \
     && apk --no-cache upgrade \
     && apk add --no-cache \
+        tzdata \
         curl \
         wget \
         curl \

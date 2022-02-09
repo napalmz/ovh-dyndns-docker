@@ -16,27 +16,17 @@
 #
 # CHANGE: "HOST", "LOGIN" and "PASSWORD" to reflect YOUR account variables
 SCRIPT_PATH='/srv/dyndns'
-
-getip() {
-    IP=`curl http://ifconfig.me/ip`
-    OLDIP=`dig +short $HOST @$NSSERVER`
-}
-
-echo "[`date '+%Y-%m-%d %H:%M:%S'`] ============================================================="
-echo "[`date '+%Y-%m-%d %H:%M:%S'`] Begining new dyndns check"
-getip
+IP=`curl http://ifconfig.me/ip`
+OLDIP=`dig +short $HOST @$NSSERVER`
 
 if [ "$IP" ]; then
-    echo "[`date '+%Y-%m-%d %H:%M:%S'`] Old IP is ${OLDIP}"
-    echo "[`date '+%Y-%m-%d %H:%M:%S'`] New IP is ${IP}"
-
     if [ "$OLDIP" != "$IP" ]; then
-        echo "[`date '+%Y-%m-%d %H:%M:%S'`] Update is needed…"
+        echo "[`date '+%Y-%m-%d %H:%M:%S'`] Dyndns check - Old: ${OLDIP} - New: ${IP} -> ###### Update is needed… ######"
         wget "${ENTRYPOINT}?system=dyndns&hostname=${HOST}&myip=${IP}" --user="${LOGIN}" --password="${PASSWORD}"
         echo -n "$IP" > $SCRIPT_PATH/old.ip
     else
-        echo "[`date '+%Y-%m-%d %H:%M:%S'`] No update required."
+        echo "[`date '+%Y-%m-%d %H:%M:%S'`] Dyndns check - Old: ${OLDIP} - New: ${IP} -> No update required."
     fi
  else
-    echo "[`date '+%Y-%m-%d %H:%M:%S'`] WAN IP not found. Exiting!"
+    echo "[`date '+%Y-%m-%d %H:%M:%S'`] Dyndns check - WAN IP not found. Exiting!"
  fi
