@@ -1,5 +1,5 @@
 FROM alpine:latest
-MAINTAINER NapalmZ <admin@napalmz.eu>
+LABEL maintainer "NapalmZ <admin@napalmz.eu>"
 
 ENV HOST=""
 ENV LOGIN=""
