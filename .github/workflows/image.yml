@@ -1,6 +1,7 @@
 name: Build ovh-dyndns image
 
 on:
+  workflow_dispatch:
   push:
     branches: [ master ]
     tags:
